@@ -10,4 +10,4 @@ class ExampleDialog(QDialog):
         self.mywidgetui.plainTextEditCode.setPlainText(self.__getfiletext())
 
     def __getfiletext(self):
-        return open('example.txt','r').read()
+        return open('example.txt','rb').read().decode('utf-8')

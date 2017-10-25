@@ -9,21 +9,68 @@ import os
     ctrl+alt+shift+F8--->结束
     想干的事用@on_startbuttons_clicked修饰
 '''
-
 isStart = False
 isEnd = False
+
+# @装饰器start
+def on_startbuttons_clicked(func):
+    def startwork(*args, **kwargs):
+        global isStart
+        while True:
+            if isStart:
+                print('-------------------start------------------')
+                isStart = False
+                func(*args, **kwargs)
+            time.sleep(0.01)
+    return startwork
+
+# @装饰器stop
+def on_stoptbuttons_clicked(func):
+    def exitwork(*args, **kwargs):
+        global isEnd
+        while True:
+            if isEnd:
+                print('-------------------end------------------')
+                isEnd = False
+                func(*args, **kwargs)
+            time.sleep(0.01)
+    return exitwork
 
 
 class MyPyKeyboardEvent(PyKeyboardEvent):
     def __init__(self):
         PyKeyboardEvent.__init__(self)
+        self.times = 1
+        self.interval = 0.5
+        self.startcode = str(r'print("start!!!")')
+        self.stopcode = str(r'print("stop!!!")')
+
+        self.__timemark = 1
+        self.__keyboard = PyKeyboard()
         self.isF7Press = False
         self.isF8Press = False
         self.isLeftctrlPress = False
         self.isLeftaltPress = False
         self.isLeftshiftPress = False
 
+    def set_start_action(self, startcode, times=1, interval=0.5):
+        self.startcode = startcode
+        self.times = times
+        self.interval = interval
+
+    def run_task(self):
+        self.threadstart = Thread(target=self.opt_axure)
+        self.threadstop = Thread(target=self.exit_system)
+        self.threadkey = Thread(target=self.run)
+        self.threadstart.start()
+        self.threadstop.start()
+        # self.run()
+        self.threadkey.start()
+        print('KeyBoard task is running now!!!')
+
+
     def tap(self, keycode, character, press):
+        global isStart,isEnd
         # print(keycode, character, press)
         if character == 'LCONTROL':
             if press == True:
@@ -57,98 +104,29 @@ class MyPyKeyboardEvent(PyKeyboardEvent):
 
         # ctrl+alt+shift+F7
         if self.isF7Press == True and self.isLeftctrlPress == True and self.isLeftaltPress == True and self.isLeftshiftPress == True:
-            global isStart
             isStart = True
 
         # ctrl+alt+shift+F8
         if self.isF8Press == True and self.isLeftctrlPress == True and self.isLeftaltPress == True and self.isLeftshiftPress == True:
-            global isEnd
             isEnd = True
 
+    def _start_do(self):
+        exec(self.startcode)
 
-# area_num = 100001
-# area_num = 65
-area_num = 1
-def doRename():
-    global keyBoard
-    global area_num
-    # keyBoard.tap_key(keyBoard.function_keys[2])      # F2
-    # keyBoard.type_string('data_auto20160606200'+str(area_num)+'.bak') 
-    # keyBoard.type_string(str(round(random.uniform(20,40),2)))
-    # keyBoard.type_string('WM'+str(area_num))
-    # keyBoard.type_string(chr(area_num))
-    keyBoard.type_string('192.168.75.'+str(area_num))
-    keyBoard.tap_key(keyBoard.down_key)                # 方向键下
-    area_num += 1
+    @on_startbuttons_clicked
+    def opt_axure(self):
+        print(str(self.times) + "======" + str(self.interval))
+        self.dotimes(self._start_do, self.times, self.interval)
 
-myasciiA = ord('A') 
-def doRename_A():
-    global keyBoard
-    global myasciiA
-    # keyBoard.tap_key(keyBoard.function_keys[2])      # F2
-    keyBoard.type_string('area'+chr(myasciiA))         # type a string
-    keyBoard.tap_key(keyBoard.down_key)                # 方向键下
-    myasciiA += 1
+    @on_stoptbuttons_clicked
+    def exit_system(self):
+        # os._exit(0)
+        exec(self.stopcode)
 
+    # 以intervals时间间隔干times次func
+    def dotimes(self, func, times, interval):
+        for x in range(0, times):
+            if interval != 0:
+                time.sleep(interval)
+            func()
 
-# 以intervals时间间隔干times次func
-def dotimes(func, times, intervals):
-    for x in range(0, times):
-        if intervals != 0:
-            time.sleep(intervals)
-        func()
-
-# @装饰器1
-def on_startbuttons_clicked(func):
-    def startwork(*args, **kwargs):
-        global isStart
-        while True:
-            if isStart:
-                print('-------------------start------------------')
-                isStart = False
-                func(*args, **kwargs)
-            time.sleep(0.01)
-    return startwork
-
-# @装饰器2
-def on_endbuttons_clicked(func):
-    def exitwork(*args, **kwargs):
-        global isEnd
-        while True:
-            if isEnd:
-                print('-------------------end------------------')
-                func(*args, **kwargs)
-            time.sleep(0.01)
-    return exitwork
-
-
-@on_endbuttons_clicked
-def exit_system():
-    os._exit(0)
-
-@on_startbuttons_clicked
-def opt_axure():
-    # dotimes(doRename, 15, 0.5)
-    global aop_code
-    exec(aop_code)
-
-aop_code = str()
-def dohello():
-    print('hello')
-
-
-if __name__=='__main__':
-    print('================System on=================')
-    aop_code = 'dotimes(dohello, 10, 0.5)'
-    keyBoard = PyKeyboard()
-    thread1 = Thread(target=opt_axure)
-    thread1.start()
-    thread2 = Thread(target=exit_system)
-    thread2.start()
-    p = MyPyKeyboardEvent()
-    p.run()
-
-    # exec(code)                # 实现aop,实现各种酷炫动态修改,直接影响runtime
-    # execfile('abc.py')        # 在py里运行另外一个py
-    # os.system('abc.py 123')   # 在py里运行另外一个py,带参数
-    # os.popen('abc.py 123')    # 和os.system很相似,只是返回是file,相当于管道,返回来执行完的输出结果

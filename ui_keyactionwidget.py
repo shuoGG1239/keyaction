@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_keyactionwidget.ui'
 #
-# Created: Tue Oct 24 16:44:01 2017
+# Created: Wed Oct 25 23:23:46 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_KeyActionWidget(object):
     def setupUi(self, KeyActionWidget):
         KeyActionWidget.setObjectName("KeyActionWidget")
-        KeyActionWidget.resize(684, 422)
+        KeyActionWidget.resize(684, 434)
         self.label = QtWidgets.QLabel(KeyActionWidget)
         self.label.setGeometry(QtCore.QRect(16, 10, 41, 20))
         self.label.setObjectName("label")
@@ -66,6 +66,9 @@ class Ui_KeyActionWidget(object):
         self.checkBoxCodeStop.setGeometry(QtCore.QRect(460, 73, 21, 16))
         self.checkBoxCodeStop.setText("")
         self.checkBoxCodeStop.setObjectName("checkBoxCodeStop")
+        self.labelStatus = QtWidgets.QLabel(KeyActionWidget)
+        self.labelStatus.setGeometry(QtCore.QRect(17, 408, 641, 16))
+        self.labelStatus.setObjectName("labelStatus")
 
         self.retranslateUi(KeyActionWidget)
         QtCore.QMetaObject.connectSlotsByName(KeyActionWidget)
@@ -82,4 +85,5 @@ class Ui_KeyActionWidget(object):
         self.pushButtonExample.setText(_translate("KeyActionWidget", "Code Example"))
         self.pushButtonRun.setText(_translate("KeyActionWidget", "Run"))
         self.pushButtonStop.setText(_translate("KeyActionWidget", "Stop"))
+        self.labelStatus.setText(_translate("KeyActionWidget", "Status"))
 
