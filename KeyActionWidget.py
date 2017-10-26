@@ -26,7 +26,9 @@ class KeyActionWidget(QWidget):
         if self.mywidgetui.plainTextEditCodeStart.toPlainText() == '':
             self.mywidgetui.labelStatus.setText('Startcode should not be empty!')
             return
-        self.keyevent.set_start_action(self.get_startcode(),5)
+        self.mywidgetui.labelStatus.setText('Keyboard Now Listening!!!')
+        self.keyevent.set_start_action(self.get_startcode(),self.get_retime(),self.get_interval())
+        self.keyevent.set_stop_action(self.get_stopcode())
         self.keyevent.run_task()
 
     @pyqtSlot()
@@ -39,16 +41,27 @@ class KeyActionWidget(QWidget):
     def get_checkbox_stop_status(self):
         return self.mywidgetui.checkBoxCodeStop.isChecked()
 
+    def get_retime(self):
+        return int(self.mywidgetui.lineEditRetime.text())
+
+    def get_interval(self):
+        return float(self.mywidgetui.lineEditInterval.text())
+
     def get_startcode(self):
         return self.mywidgetui.plainTextEditCodeStart.toPlainText()
 
+    def get_stopcode(self):
+        return self.mywidgetui.plainTextEditCodeStop.toPlainText()
+
     def __init_innerwidget_status(self):
-        self.mywidgetui.lineEditRetime.setText('1')                     # 执行1次
+        self.mywidgetui.lineEditRetime.setText('3')                     # 执行3次
         self.mywidgetui.lineEditInterval.setText('0.5')                 # 500ms
         self.mywidgetui.lineEditStart.setText('ctrl+alt+shift+F7')
         self.mywidgetui.lineEditStop.setText('ctrl+alt+shift+F8')
         self.mywidgetui.checkBoxCodeStart.setChecked(True)
         self.mywidgetui.checkBoxCodeStop.setChecked(False)
+        self.mywidgetui.plainTextEditCodeStart.setPlainText('print("Hello")')
+        self.mywidgetui.plainTextEditCodeStop.setPlainText('os._exit(0)')
 
     def closeEvent(self, e):
         os._exit(0)

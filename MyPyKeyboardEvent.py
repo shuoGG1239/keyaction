@@ -58,13 +58,15 @@ class MyPyKeyboardEvent(PyKeyboardEvent):
         self.times = times
         self.interval = interval
 
+    def set_stop_action(self, stopcode):
+        self.stopcode = stopcode
+
     def run_task(self):
-        self.threadstart = Thread(target=self.opt_axure)
+        self.threadstart = Thread(target=self.maintask)
         self.threadstop = Thread(target=self.exit_system)
         self.threadkey = Thread(target=self.run)
         self.threadstart.start()
         self.threadstop.start()
-        # self.run()
         self.threadkey.start()
         print('KeyBoard task is running now!!!')
 
@@ -114,8 +116,7 @@ class MyPyKeyboardEvent(PyKeyboardEvent):
         exec(self.startcode)
 
     @on_startbuttons_clicked
-    def opt_axure(self):
-        print(str(self.times) + "======" + str(self.interval))
+    def maintask(self):
         self.dotimes(self._start_do, self.times, self.interval)
 
     @on_stoptbuttons_clicked

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_keyactionwidget.ui'
 #
-# Created: Wed Oct 25 23:23:46 2017
+# Created: Thu Oct 26 14:56:15 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -41,10 +41,10 @@ class Ui_KeyActionWidget(object):
         self.plainTextEditCodeStart.setGeometry(QtCore.QRect(13, 90, 321, 281))
         self.plainTextEditCodeStart.setObjectName("plainTextEditCodeStart")
         self.label_5 = QtWidgets.QLabel(KeyActionWidget)
-        self.label_5.setGeometry(QtCore.QRect(16, 70, 111, 20))
+        self.label_5.setGeometry(QtCore.QRect(16, 70, 121, 20))
         self.label_5.setObjectName("label_5")
         self.label_6 = QtWidgets.QLabel(KeyActionWidget)
-        self.label_6.setGeometry(QtCore.QRect(353, 70, 111, 20))
+        self.label_6.setGeometry(QtCore.QRect(353, 70, 121, 20))
         self.label_6.setObjectName("label_6")
         self.plainTextEditCodeStop = QtWidgets.QPlainTextEdit(KeyActionWidget)
         self.plainTextEditCodeStop.setGeometry(QtCore.QRect(350, 90, 321, 281))
@@ -59,11 +59,11 @@ class Ui_KeyActionWidget(object):
         self.pushButtonStop.setGeometry(QtCore.QRect(450, 40, 101, 23))
         self.pushButtonStop.setObjectName("pushButtonStop")
         self.checkBoxCodeStart = QtWidgets.QCheckBox(KeyActionWidget)
-        self.checkBoxCodeStart.setGeometry(QtCore.QRect(131, 73, 21, 16))
+        self.checkBoxCodeStart.setGeometry(QtCore.QRect(140, 73, 21, 16))
         self.checkBoxCodeStart.setText("")
         self.checkBoxCodeStart.setObjectName("checkBoxCodeStart")
         self.checkBoxCodeStop = QtWidgets.QCheckBox(KeyActionWidget)
-        self.checkBoxCodeStop.setGeometry(QtCore.QRect(460, 73, 21, 16))
+        self.checkBoxCodeStop.setGeometry(QtCore.QRect(480, 73, 21, 16))
         self.checkBoxCodeStop.setText("")
         self.checkBoxCodeStop.setObjectName("checkBoxCodeStop")
         self.labelStatus = QtWidgets.QLabel(KeyActionWidget)
