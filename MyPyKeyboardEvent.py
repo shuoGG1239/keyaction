@@ -12,16 +12,41 @@ import os
 isStart = False
 isEnd = False
 
+end_circle = False
+def stop_startTask():
+    """
+    结束掉dotimes的循环
+    :return: void
+    """
+    global end_circle
+    end_circle = True
+
+
+# 这里结束线程方法只作为示范,没有实际用到该项目
+end_thread = False
+def stop_startThread():
+    """
+    py的Thread没有stop方法, 须用标志位方式来自然结束线程
+    :return: void
+    """
+    global end_thread
+    end_thread = True
+
+
 # @装饰器start
 def on_startbuttons_clicked(func):
     def startwork(*args, **kwargs):
-        global isStart
+        global isStart, end_thread
         while True:
             if isStart:
                 print('-------------------start------------------')
                 isStart = False
                 func(*args, **kwargs)
             time.sleep(0.01)
+            if end_thread:    # True时,结束该循环,线程threadstart自然死去
+                end_thread = False
+                break
+        print("start thread is dead")
     return startwork
 
 # @装饰器stop
@@ -46,7 +71,7 @@ class MyPyKeyboardEvent(PyKeyboardEvent):
         self.stopcode = str(r'print("stop!!!")')
 
         self.__timemark = 1
-        self.__keyboard = PyKeyboard()
+        self.keyboard = PyKeyboard()
         self.isF7Press = False
         self.isF8Press = False
         self.isLeftctrlPress = False
@@ -61,7 +86,7 @@ class MyPyKeyboardEvent(PyKeyboardEvent):
     def set_stop_action(self, stopcode):
         self.stopcode = stopcode
 
-    def run_task(self):
+    def run_all_tasks(self):
         self.threadstart = Thread(target=self.maintask)
         self.threadstop = Thread(target=self.exit_system)
         self.threadkey = Thread(target=self.run)
@@ -70,6 +95,9 @@ class MyPyKeyboardEvent(PyKeyboardEvent):
         self.threadkey.start()
         print('KeyBoard task is running now!!!')
 
+    def run_start_task(self):
+        self.threadstart = Thread(target=self.maintask)
+        self.threadstart.start()
 
     def tap(self, keycode, character, press):
         global isStart,isEnd
@@ -126,8 +154,12 @@ class MyPyKeyboardEvent(PyKeyboardEvent):
 
     # 以intervals时间间隔干times次func
     def dotimes(self, func, times, interval):
+        global end_circle
         for x in range(0, times):
             if interval != 0:
                 time.sleep(interval)
             func()
+            if end_circle:
+                end_circle = False
+                break
 

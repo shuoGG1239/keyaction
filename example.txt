@@ -1,23 +1,21 @@
-# area_num = 100001
-# area_num = 65
 area_num = 1
 def doRename():
-    global keyBoard
+    global keyboard
     global area_num
-    # keyBoard.tap_key(keyBoard.function_keys[2])      # F2
-    # keyBoard.type_string('data_auto20160606200'+str(area_num)+'.bak') 
-    # keyBoard.type_string(str(round(random.uniform(20,40),2)))
-    # keyBoard.type_string('WM'+str(area_num))
-    # keyBoard.type_string(chr(area_num))
-    keyBoard.type_string('192.168.75.'+str(area_num))
-    keyBoard.tap_key(keyBoard.down_key)                # 方向键下
+    # keyboard.tap_key(keyboard.function_keys[2])      # F2
+    # keyboard.type_string('data_auto20160606200'+str(area_num)+'.bak') 
+    # keyboard.type_string(str(round(random.uniform(20,40),2)))
+    # keyboard.type_string('WM'+str(area_num))
+    # keyboard.type_string(chr(area_num))
+    keyboard.type_string('192.168.75.'+str(area_num))
+    keyboard.tap_key(keyboard.down_key)                # 方向键下
     area_num += 1
 
 myasciiA = ord('A') 
 def doRename_A():
-    global keyBoard
+    global keyboard
     global myasciiA
-    # keyBoard.tap_key(keyBoard.function_keys[2])      # F2
-    keyBoard.type_string('area'+chr(myasciiA))         # type a string
-    keyBoard.tap_key(keyBoard.down_key)                # 方向键下
+    # keyboard.tap_key(keyboard.function_keys[2])      # F2
+    keyboard.type_string('area'+chr(myasciiA))         # type a string
+    keyboard.tap_key(keyboard.down_key)                # 方向键下
     myasciiA += 1

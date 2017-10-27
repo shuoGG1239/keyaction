@@ -2,6 +2,7 @@ import os
 import ui_keyactionwidget
 import ExampleDialog
 from MyPyKeyboardEvent import MyPyKeyboardEvent
+import MyPyKeyboardEvent as pykey_module
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import pyqtSlot
 
@@ -15,7 +16,22 @@ class KeyActionWidget(QWidget):
         self.mywidgetui.pushButtonExample.clicked.connect(self.__slot_show_exampledialog)
         self.mywidgetui.pushButtonRun.clicked.connect(self.__slot_runscan)
         self.mywidgetui.pushButtonStop.clicked.connect(self.__slot_stopscan)
+        self.mywidgetui.lineEditRetime.textChanged.connect(self.__slot_update_taskargs)
+        self.mywidgetui.lineEditInterval.textChanged.connect(self.__slot_update_taskargs)
+        self.mywidgetui.plainTextEditCodeStart.textChanged.connect(self.__slot_update_taskstartcode)
         self.__init_innerwidget_status()
+
+    @pyqtSlot(str)
+    def __slot_update_taskargs(self, newtext):
+        src_obj = self.sender()
+        if src_obj.objectName() == 'lineEditRetime':
+            self.keyevent.times = int(newtext)
+        elif src_obj.objectName() == 'lineEditInterval':
+            self.keyevent.interval = float(newtext)
+
+    @pyqtSlot()
+    def __slot_update_taskstartcode(self):
+        self.keyevent.startcode = self.mywidgetui.plainTextEditCodeStart.toPlainText()
 
     @pyqtSlot()
     def __slot_show_exampledialog(self):
@@ -29,11 +45,12 @@ class KeyActionWidget(QWidget):
         self.mywidgetui.labelStatus.setText('Keyboard Now Listening!!!')
         self.keyevent.set_start_action(self.get_startcode(),self.get_retime(),self.get_interval())
         self.keyevent.set_stop_action(self.get_stopcode())
-        self.keyevent.run_task()
+        self.keyevent.run_all_tasks()
 
     @pyqtSlot()
     def __slot_stopscan(self):
-        print('__slot_stopscan')
+        pykey_module.stop_startTask()
+
 
     def get_checkbox_start_status(self):
         return self.mywidgetui.checkBoxCodeStart.isChecked()
