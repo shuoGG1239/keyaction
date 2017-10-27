@@ -1,21 +1,23 @@
-area_num = 1
-def doRename():
-    global keyboard
-    global area_num
-    # keyboard.tap_key(keyboard.function_keys[2])      # F2
-    # keyboard.type_string('data_auto20160606200'+str(area_num)+'.bak') 
-    # keyboard.type_string(str(round(random.uniform(20,40),2)))
-    # keyboard.type_string('WM'+str(area_num))
-    # keyboard.type_string(chr(area_num))
-    keyboard.type_string('192.168.75.'+str(area_num))
-    keyboard.tap_key(keyboard.down_key)                # 方向键下
-    area_num += 1
+Precode example:
+self.timemark = 1
 
-myasciiA = ord('A') 
-def doRename_A():
-    global keyboard
-    global myasciiA
-    # keyboard.tap_key(keyboard.function_keys[2])      # F2
-    keyboard.type_string('area'+chr(myasciiA))         # type a string
-    keyboard.tap_key(keyboard.down_key)                # 方向键下
-    myasciiA += 1
+Maincode example0:
+print(self.timemark)
+self.timemark += 1
+
+Maincode example1:
+import random
+# self.keyboard.tap_key(self.keyboard.function_keys[2])      # F2
+# self.keyboard.type_string('data_auto20160606200'+str(self.timemark)+'.bak')
+# self.keyboard.type_string(str(round(random.uniform(20,40),2)))
+# self.keyboard.type_string('WM'+str(self.timemark))
+# self.keyboard.type_string(chr(self.timemark))
+self.keyboard.type_string('192.168.75.'+str(self.timemark))
+self.keyboard.tap_key(self.keyboard.down_key)                # 方向键下
+self.timemark += 1
+
+Maincode example2:
+# self.keyboard.tap_key(self.keyboard.function_keys[2])      # F2
+self.keyboard.type_string('area'+chr(self.timemark))         # type a string
+self.keyboard.tap_key(self.keyboard.down_key)                # 方向键下
+self.timemark += 1

@@ -2,7 +2,6 @@ import os
 import ui_keyactionwidget
 import ExampleDialog
 from MyPyKeyboardEvent import MyPyKeyboardEvent
-import MyPyKeyboardEvent as pykey_module
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import pyqtSlot
 
@@ -15,10 +14,14 @@ class KeyActionWidget(QWidget):
         self.mywidgetui.setupUi(self)
         self.mywidgetui.pushButtonExample.clicked.connect(self.__slot_show_exampledialog)
         self.mywidgetui.pushButtonRun.clicked.connect(self.__slot_runscan)
-        self.mywidgetui.pushButtonStop.clicked.connect(self.__slot_stopscan)
+        self.mywidgetui.lineEditCodePre.textChanged.connect(self.__slot_update_taskargs)
         self.mywidgetui.lineEditRetime.textChanged.connect(self.__slot_update_taskargs)
         self.mywidgetui.lineEditInterval.textChanged.connect(self.__slot_update_taskargs)
-        self.mywidgetui.plainTextEditCodeStart.textChanged.connect(self.__slot_update_taskstartcode)
+        self.mywidgetui.plainTextEditCodeMain.textChanged.connect(self.__slot_update_maintaskcode)
+        self.mywidgetui.radioButtonStop.clicked.connect(self.__slot_change_endstyle)
+        self.mywidgetui.radioButtonExit.clicked.connect(self.__slot_change_endstyle)
+        self.mywidgetui.checkBoxCodeMain.clicked.connect(self.__slot_change_checkbox)
+        self.mywidgetui.checkBoxCodePre.clicked.connect(self.__slot_change_checkbox)
         self.__init_innerwidget_status()
 
     @pyqtSlot(str)
@@ -28,10 +31,12 @@ class KeyActionWidget(QWidget):
             self.keyevent.times = int(newtext)
         elif src_obj.objectName() == 'lineEditInterval':
             self.keyevent.interval = float(newtext)
+        elif src_obj.objectName() == 'lineEditCodePre':
+            self.keyevent.precode = newtext
 
     @pyqtSlot()
-    def __slot_update_taskstartcode(self):
-        self.keyevent.startcode = self.mywidgetui.plainTextEditCodeStart.toPlainText()
+    def __slot_update_maintaskcode(self):
+        self.keyevent.maincode = self.mywidgetui.plainTextEditCodeMain.toPlainText()
 
     @pyqtSlot()
     def __slot_show_exampledialog(self):
@@ -39,24 +44,35 @@ class KeyActionWidget(QWidget):
 
     @pyqtSlot()
     def __slot_runscan(self):
-        if self.mywidgetui.plainTextEditCodeStart.toPlainText() == '':
-            self.mywidgetui.labelStatus.setText('Startcode should not be empty!')
+        if self.mywidgetui.plainTextEditCodeMain.toPlainText() == '':
+            self.mywidgetui.labelStatus.setText('Main code should not be empty!')
             return
         self.mywidgetui.labelStatus.setText('Keyboard Now Listening!!!')
-        self.keyevent.set_start_action(self.get_startcode(),self.get_retime(),self.get_interval())
-        self.keyevent.set_stop_action(self.get_stopcode())
+        self.keyevent.set_main_action(self.get_maincode(),self.get_retime(),self.get_interval())
+        self.keyevent.set_pre_action(self.get_precode())
         self.keyevent.run_all_tasks()
 
     @pyqtSlot()
-    def __slot_stopscan(self):
-        pykey_module.stop_startTask()
+    def __slot_change_endstyle(self):
+        src_obj = self.sender()
+        if src_obj.objectName() == 'radioButtonExit':
+            self.keyevent.end_style = 'exit'
+        elif src_obj.objectName() == 'radioButtonStop':
+            self.keyevent.end_style = 'stop'
 
+    @pyqtSlot()
+    def __slot_change_checkbox(self):
+        src_obj = self.sender()
+        if src_obj.objectName() == 'checkBoxCodeMain':
+            self.keyevent.is_main_enable = self.mywidgetui.checkBoxCodeMain.isChecked()
+        elif src_obj.objectName() == 'checkBoxCodePre':
+            self.keyevent.is_pre_enable = self.mywidgetui.checkBoxCodePre.isChecked()
 
-    def get_checkbox_start_status(self):
-        return self.mywidgetui.checkBoxCodeStart.isChecked()
+    def get_checkbox_maincode_sta(self):
+        return self.mywidgetui.checkBoxCodeMain.isChecked()
 
-    def get_checkbox_stop_status(self):
-        return self.mywidgetui.checkBoxCodeStop.isChecked()
+    def get_checkbox_precode_sta(self):
+        return self.mywidgetui.checkBoxCodePre.isChecked()
 
     def get_retime(self):
         return int(self.mywidgetui.lineEditRetime.text())
@@ -64,21 +80,24 @@ class KeyActionWidget(QWidget):
     def get_interval(self):
         return float(self.mywidgetui.lineEditInterval.text())
 
-    def get_startcode(self):
-        return self.mywidgetui.plainTextEditCodeStart.toPlainText()
+    def get_maincode(self):
+        return self.mywidgetui.plainTextEditCodeMain.toPlainText()
 
-    def get_stopcode(self):
-        return self.mywidgetui.plainTextEditCodeStop.toPlainText()
+    def get_precode(self):
+        return self.mywidgetui.lineEditCodePre.text()
 
     def __init_innerwidget_status(self):
         self.mywidgetui.lineEditRetime.setText('3')                     # 执行3次
         self.mywidgetui.lineEditInterval.setText('0.5')                 # 500ms
         self.mywidgetui.lineEditStart.setText('ctrl+alt+shift+F7')
         self.mywidgetui.lineEditStop.setText('ctrl+alt+shift+F8')
-        self.mywidgetui.checkBoxCodeStart.setChecked(True)
-        self.mywidgetui.checkBoxCodeStop.setChecked(False)
-        self.mywidgetui.plainTextEditCodeStart.setPlainText('print("Hello")')
-        self.mywidgetui.plainTextEditCodeStop.setPlainText('os._exit(0)')
+        self.mywidgetui.checkBoxCodeMain.setChecked(True)
+        self.mywidgetui.checkBoxCodePre.setChecked(True)
+        self.mywidgetui.plainTextEditCodeMain.setPlainText('print(self.timemark)')
+        self.mywidgetui.lineEditCodePre.setText('self.timemark=10')
+        self.mywidgetui.radioButtonExit.click()
+        self.mywidgetui.lineEditStart.setReadOnly(True)
+        self.mywidgetui.lineEditStop.setReadOnly(True)
 
     def closeEvent(self, e):
         os._exit(0)
