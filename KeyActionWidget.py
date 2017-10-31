@@ -1,9 +1,9 @@
-import os
+import os, sys
 import ui_keyactionwidget
 import ExampleDialog
 from MyPyKeyboardEvent import MyPyKeyboardEvent
 from PyQt5.QtWidgets import QWidget
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import pyqtSlot, pyqtSignal, QObject
 
 
 class KeyActionWidget(QWidget):
@@ -23,6 +23,8 @@ class KeyActionWidget(QWidget):
         self.mywidgetui.checkBoxCodeMain.clicked.connect(self.__slot_change_checkbox)
         self.mywidgetui.checkBoxCodePre.clicked.connect(self.__slot_change_checkbox)
         self.__init_innerwidget_status()
+        self.__redirect_print()
+
 
     @pyqtSlot(str)
     def __slot_update_taskargs(self, newtext):
@@ -47,6 +49,7 @@ class KeyActionWidget(QWidget):
         if self.mywidgetui.plainTextEditCodeMain.toPlainText() == '':
             self.mywidgetui.labelStatus.setText('Main code should not be empty!')
             return
+        self.mywidgetui.pushButtonRun.setEnabled(False)
         self.mywidgetui.labelStatus.setText('Keyboard Now Listening!!!')
         self.keyevent.set_main_action(self.get_maincode(),self.get_retime(),self.get_interval())
         self.keyevent.set_pre_action(self.get_precode())
@@ -99,5 +102,29 @@ class KeyActionWidget(QWidget):
         self.mywidgetui.lineEditStart.setReadOnly(True)
         self.mywidgetui.lineEditStop.setReadOnly(True)
 
+    def __redirect_print(self):
+        """
+        重定向sys.out,使print(text)定向到__refunc(text)
+        :return:
+        """
+        mystream = MyOutStream()
+        mystream.textWritten.connect(self.__refunc)
+        sys.stdout = mystream
+
+    @pyqtSlot(str)
+    def __refunc(self, text):
+        useful_text = text.strip()
+        if useful_text != '':
+            self.mywidgetui.labelStatus.setText(useful_text)
+
     def closeEvent(self, e):
+        sys.stdout = sys.__stdout__     # 归还print输出
         os._exit(0)
+
+
+
+# 用于重定向sys.out的类, 只要带write()方法即可
+class MyOutStream(QObject):
+    textWritten = pyqtSignal(str)
+    def write(self, text):
+        self.textWritten.emit(str(text))
