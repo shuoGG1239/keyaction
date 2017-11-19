@@ -23,13 +23,13 @@ sleep(0.5)<br>
 print(self.timemark)<br>
 self.timemark += 2<br>
 sleep(0.5)<br>
-<img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example1.jpg" alt="example" width="100%">
+<img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example1.jpg" alt="example">
 # 具体例子
 * 在ip这一列填写10个依次递增的ip地址:
 * 执行前:
-<img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example_axure1.jpg" alt="example" width="100%">
+<img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example_axure1.jpg" alt="example">
 * 执行后:
-<img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example_axure2.jpg" alt="example" width="100%">
+<img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example_axure2.jpg" alt="example">
 
 # 可以用的模块
 鼠标键盘的操作是用PyUserInput的Api, 直接操作self.keyboard这个对象就行了, <br>
