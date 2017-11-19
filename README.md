@@ -4,16 +4,16 @@
 就顺便封装一下开发了该GUI版本;
 
 # 使用说明
-1.两个全局快捷键:
-* ctrl+alt+shift+F7: 开始执行的动作
-* ctrl+alt+shift+F8: 中断执行的动作(stop)或直接退出程序(exit)
-* 按下run之后这2个快捷键才开始生效;
-<br>
-2.两个输入框:
-* 输入框都是写python3代码的地方;
-* 当按下ctrl+alt+shift+F7时会执行 1次小框的代码 + n次大框的代码;
-* 大框一般为主体, 小框一般用来初始化变量;
-* 如下图, 当按下ctrl+alt+shift+F7则等价于执行了如下的代码:
+*1.两个全局快捷键:
+  *ctrl+alt+shift+F7: 开始执行的动作
+  *ctrl+alt+shift+F8: 中断执行的动作(stop)或直接退出程序(exit)
+  *按下run之后这2个快捷键才开始生效;
+*2.两个输入框:
+  *输入框都是写python3代码的地方;
+  *当按下ctrl+alt+shift+F7时会执行 1次小框的代码 + n次大框的代码;
+  *大框一般为主体, 小框一般用来初始化变量;
+  *如下图, 当按下ctrl+alt+shift+F7则等价于执行了如下的代码:
+```Python
 self.timemark=10<br>
 print(self.timemark)<br>
 self.timemark += 2<br>
@@ -24,13 +24,14 @@ sleep(0.5)<br>
 print(self.timemark)<br>
 self.timemark += 2<br>
 sleep(0.5)<br>
+```
 <img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example1.jpg" alt="example"><br>
 
 # 具体例子
-* 在ip这一列填写10个依次递增的ip地址:
-* 执行前:
+*在ip这一列填写10个依次递增的ip地址:
+*执行前:
 <img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example_axure1.jpg" alt="example">
-* 执行后:
+*执行后:
 <img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example_axure2.jpg" alt="example">
 
 # 可以用的模块
@@ -46,7 +47,7 @@ sleep(0.5)<br>
 version >= 3
 
 # require the following py modules:
-* Pywin32
-* PyQt5
-* PyUserInput
-* PyHook-3k
+*Pywin32
+*PyQt5
+*PyUserInput
+*PyHook-3k
