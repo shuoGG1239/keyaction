@@ -8,6 +8,7 @@
 * ctrl+alt+shift+F7: 开始执行的动作
 * ctrl+alt+shift+F8: 中断执行的动作(stop)或直接退出程序(exit)
 * 按下run之后这2个快捷键才开始生效;
+<br>
 2.两个输入框:
 * 输入框都是写python3代码的地方;
 * 当按下ctrl+alt+shift+F7时会执行 1次小框的代码 + n次大框的代码;
@@ -23,7 +24,8 @@ sleep(0.5)<br>
 print(self.timemark)<br>
 self.timemark += 2<br>
 sleep(0.5)<br>
-<img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example1.jpg" alt="example">
+<img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example1.jpg" alt="example"><br>
+
 # 具体例子
 * 在ip这一列填写10个依次递增的ip地址:
 * 执行前:
