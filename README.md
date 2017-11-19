@@ -30,7 +30,7 @@ sleep(0.5)
 # 具体例子
 * 在ip这一列填写10个依次递增的ip地址:
 * 执行前:
-<img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example_axure1.jpg" alt="example">
+<img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example_axure1.jpg" alt="example"><br>
 * 执行后:
 <img src="https://github.com/shuoGG1239/keyaction/blob/master/readme_img/example_axure2.jpg" alt="example">
 
@@ -40,8 +40,6 @@ sleep(0.5)
 
 # 改进
 易用性不够, 还要继续改进...
-
-##################################################
 
 # python version
 version >= 3
