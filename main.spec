@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['main.py'],
-             pathex=['D:\\workspace_py\\pyqt_keyaction'],
+             pathex=['D:\\workspace_py\\keyaction\\keyaction'],
              binaries=[],
              datas=[],
              hiddenimports=[],
